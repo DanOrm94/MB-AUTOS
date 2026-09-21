@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mb-autos-api",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-09-21",
+  "routes": [{ "pattern": "mbautos.co.uk/api/*", "zone_name": "mbautos.co.uk" }],
+  "d1_databases": [{
+    "binding": "DB",
+    "database_name": "mb-autos",
+    "database_id": "REPLACE_WITH_D1_DATABASE_ID"
+  }]
+}
