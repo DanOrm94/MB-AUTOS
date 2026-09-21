@@ -1,7 +1,7 @@
 ---
 import { SITE, business } from '../config/site';
 import '../styles/global.css';
-const { title, description = 'MB Autos — MOT centre and repair garage in Mossley, Ashton-under-Lyne.', path = Astro.url.pathname, image = '/images/garage-exterior-placeholder.svg' } = Astro.props;
+const { title, description = 'MB Autos — MOT centre and repair garage in Mossley, Ashton-under-Lyne.', path = Astro.url.pathname, image } = Astro.props;
 const canonical = new URL(path, SITE).href;
 ---
 <!doctype html>
@@ -12,7 +12,7 @@ const canonical = new URL(path, SITE).href;
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
-  <link rel="preload" as="image" href={image} />
+  {image && <link rel="preload" as="image" href={image} />}
   <meta name="theme-color" content="#101212" />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
