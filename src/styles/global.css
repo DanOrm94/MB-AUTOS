@@ -7,8 +7,8 @@
 
 :root{--bg:#0b0b0a;--panel:#151513;--text:#f6f3eb;--muted:#b8b3a8;--accent:#e8c47a;--accent-strong:#f0d08b;--cream:#f7f3e9;--line:#3b352b}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,sans-serif}
-h1,h2,h3,h4{font-family:Oswald,Impact,sans-serif;letter-spacing:.01em}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter Variable',Inter,ui-sans-serif,system-ui,sans-serif}
+h1,h2,h3,h4{font-family:'Oswald Variable',Oswald,Impact,sans-serif;letter-spacing:.01em}
 a,button,input,select,textarea{outline-offset:3px}
 :focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 .container{width:min(1120px,calc(100% - 2rem));margin-inline:auto}
