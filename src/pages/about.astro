@@ -1,0 +1,6 @@
+---
+import Page from '../layouts/Page.astro'; import CTA from '../components/CTA.astro'; import team from '../assets/team-placeholder.svg'; import { business } from '../config/site';
+---
+<Page title="About MB Autos | Mossley Garage | 30+ Years" description="Meet MB Autos, a local MOT centre and repair garage in Mossley with 30+ years' experience." h1="Local garage. Long memory." intro="MB Autos has been looking after cars for 30+ years. The workshop is based on Camden Street, off Manchester Road, in Mossley." image={team.src} breadcrumbs={[{name:'Home',path:'/'},{name:'About',path:'/about'}]}>
+  <section class="section"><div class="container grid gap-8 lg:grid-cols-2"><div><h2 class="text-3xl uppercase">What you can expect</h2><p class="mt-4 leading-8 text-zinc-300">Plain speaking, practical repairs and a local workshop you can actually talk to. We work on conventional cars and EVs, from MOTs through to bodywork and larger engine jobs.</p></div><div class="card p-7"><p class="text-sm uppercase tracking-[.2em] text-[var(--accent)]">At a glance</p><ul class="mt-5 grid gap-3 text-lg"><li><strong>{business.yearsExperience}</strong> experience</li><li><strong>5.0</strong> stars from {business.reviewCount} Google reviews</li><li><strong>Class 4 & 7</strong> MOTs</li><li><strong>IMI Level 4</strong> EV technician</li></ul></div></div></section><CTA />
+</Page>
