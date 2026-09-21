@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "mb-autos-api",
+  "name": "mb-autos",
   "main": "worker/index.ts",
   "compatibility_date": "2026-09-21",
   "routes": [{ "pattern": "mbautos.co.uk/api/*", "zone_name": "mbautos.co.uk" }],
