@@ -17,7 +17,7 @@ const reviewSchema = !reviews.some(r=>r.placeholder) && reviews.length ? {'@cont
         <p class="text-sm font-bold uppercase tracking-[.2em] text-[var(--accent)]">MOTs from {business.motPriceDisplay} · Class 4 & 7</p>
         <h2 class="mt-2 max-w-3xl text-4xl uppercase sm:text-5xl">Book the MOT. Get a free £30 diagnostic health check on request.</h2>
       </div>
-      <div class="flex flex-col justify-end gap-3 lg:items-end"><a class="btn btn-primary" href={business.bookingUrl} target="_blank" rel="noreferrer">Book online</a><p class="text-sm font-semibold text-zinc-400">Saturday by appointment</p></div>
+      <div class="flex flex-col justify-end gap-3 lg:items-end"><a class="btn btn-primary" href="/book">Book online</a><p class="text-sm font-semibold text-zinc-400">Saturday by appointment</p></div>
     </div>
   </section>
   <section class="section"><div class="container"><div class="mb-8 max-w-2xl"><p class="text-sm font-bold uppercase tracking-[.2em] text-[var(--accent)]">What we do</p><h2 class="mt-2 text-4xl uppercase">One workshop. Plenty sorted.</h2></div><div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">{services.map(s=><a class="card group p-6 hover:border-zinc-500" href={`/${s.slug}`}><p class="text-sm font-bold text-[var(--accent)]">MB AUTOS</p><h3 class="mt-2 text-2xl uppercase">{s.title}</h3><p class="mt-3 text-zinc-400">{s.short}</p><p class="mt-5 font-bold group-hover:underline">{s.price ?? 'See service'} →</p></a>)}</div></div></section>
