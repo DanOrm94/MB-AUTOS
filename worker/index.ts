@@ -34,8 +34,7 @@ function addMinutes(iso:string,n:number){return new Date(new Date(iso).getTime()
 function blockStarts(start:string,end:string){const out:string[]=[];for(let t=new Date(start);t<new Date(end);t=new Date(t.getTime()+30*60000))out.push(t.toISOString());return out}
 
 async function turnstile(request:Request,env:Env,token?:string){
-  if(!env.TURNSTILE_SECRET_KEY)return true;
-  if(!token)return false;
+  if(!env.TURNSTILE_SECRET_KEY||!token)return false;
   const f=new FormData();f.set('secret',env.TURNSTILE_SECRET_KEY);f.set('response',token);
   const ip=request.headers.get('CF-Connecting-IP');if(ip)f.set('remoteip',ip);
   const r=await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify',{method:'POST',body:f});
@@ -112,7 +111,7 @@ export default {
         const c=customer||await env.DB.prepare('SELECT id FROM customers WHERE email=?').bind(mail).first<{id:number}>();
         if(!c)return json({error:'Could not create customer.'},500,headers);
         const vehicle=await env.DB.prepare('SELECT id FROM vehicles WHERE registration=?').bind(registration).first<{id:number}>();
-        if(!vehicle)await env.DB.prepare('INSERT INTO vehicles(customer_id,registration,created_at,updated_at) VALUES(?,?,?,?,?)').bind(c.id,registration,now,now,now).run().catch(()=>{});
+        if(!vehicle)await env.DB.prepare('INSERT INTO vehicles(customer_id,registration,created_at,updated_at) VALUES(?,?,?,?)').bind(c.id,registration,now,now).run().catch(()=>{});
         const v=vehicle||await env.DB.prepare('SELECT id FROM vehicles WHERE registration=?').bind(registration).first<{id:number}>();
         if(!v)return json({error:'Could not create vehicle.'},500,headers);
         const booking=await env.DB.prepare('INSERT INTO bookings(customer_id,vehicle_id,service_id,starts_at,ends_at,bay_id,technician_id,status,notes,created_at) VALUES(?,?,?,?,?,?,?,?,?,?)').bind(c.id,v.id,s.id,start,end,freeBay?.id||null,freeTech?.id||null,'pending',notes,now).run();
