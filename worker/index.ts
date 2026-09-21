@@ -14,10 +14,12 @@ const TZ = 'Europe/London';
 function json(data:unknown,status=200,extra:Record<string,string>={}) {
   return new Response(JSON.stringify(data), { status, headers:{...JSON_HEADERS,...extra} });
 }
-function cors(origin:string|undefined) {
-  const allowed='https://mbautos.co.uk';
-  const value=origin===allowed?allowed:allowed;
-  return {'access-control-allow-origin':value,'access-control-allow-methods':'GET,POST,OPTIONS','access-control-allow-headers':'content-type','vary':'Origin'};
+function cors(origin:string|undefined,env:Env) {
+  const configured=(env.ALLOWED_ORIGIN||'').split(',').map(v=>v.trim()).filter(Boolean);
+  const allowedProduction='https://mbautos.co.uk';
+  const isPagesPreview=!!origin && /^https:\/\/[a-z0-9-]+(?:\.pages\.dev|\.pages\.dev\/)$/.test(origin);
+  const allowed=!!origin && (configured.includes(origin) || origin===allowedProduction || isPagesPreview);
+  return {'access-control-allow-origin':allowed?origin:allowedProduction,'access-control-allow-methods':'GET,POST,OPTIONS','access-control-allow-headers':'content-type','vary':'Origin'};
 }
 function todayLocal(){
   const parts=new Intl.DateTimeFormat('en-GB',{timeZone:TZ,year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
