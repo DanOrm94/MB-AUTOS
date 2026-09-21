@@ -83,6 +83,14 @@ export default {
     if(request.method==='OPTIONS')return new Response(null,{status:204,headers});
     const url=new URL(request.url);
     try{
+      if(url.pathname==='/api/health'&&request.method==='GET'){
+        const [services,resources,hours]=await Promise.all([
+          env.DB.prepare('SELECT COUNT(*) AS count FROM services WHERE active=1 AND bookable=1').first<{count:number}>(),
+          env.DB.prepare('SELECT COUNT(*) AS count FROM resources WHERE active=1').first<{count:number}>(),
+          env.DB.prepare('SELECT COUNT(*) AS count FROM business_hours WHERE bookable=1').first<{count:number}>()
+        ]);
+        return json({ok:true,services:Number(services?.count||0),resources:Number(resources?.count||0),bookableDays:Number(hours?.count||0)},200,headers);
+      }
       if(url.pathname==='/api/services'&&request.method==='GET'){
         const r=await env.DB.prepare('SELECT slug,name,duration_minutes,price_pence FROM services WHERE active=1 AND bookable=1 ORDER BY sort_order,name').all();
         return json(r.results,200,headers);
