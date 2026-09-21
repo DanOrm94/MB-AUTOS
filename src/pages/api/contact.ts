@@ -1,0 +1,21 @@
+const EMAIL_RE=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const clean=(v:FormDataEntryValue|null)=>typeof v==='string'?v.trim():'';
+export const POST = async ({ request, clientAddress }: { request: Request; clientAddress?: string }) => {
+  const form=await request.formData();
+  const name=clean(form.get('name')), phone=clean(form.get('phone')), email=clean(form.get('email'));
+  const registration=clean(form.get('registration')), service=clean(form.get('service')), message=clean(form.get('message'));
+  const website=clean(form.get('website')), token=clean(form.get('cf-turnstile-response'));
+  if(website) return new Response('OK',{status:200});
+  if(name.length<2||name.length>100||phone.length<7||phone.length>40||!EMAIL_RE.test(email)||email.length>160||message.length<10||message.length>3000) return new Response('Please check the form fields.',{status:400});
+  const env = (import.meta as any).env;
+  const secret=env.TURNSTILE_SECRET_KEY, apiKey=env.RESEND_API_KEY, recipient=env.FORM_RECIPIENT;
+  if(!secret||!apiKey||!recipient||!token) return new Response('Form is not configured.',{status:503});
+  const ip=request.headers.get('CF-Connecting-IP')||clientAddress||'';
+  const tsBody=new FormData(); tsBody.set('secret',secret); tsBody.set('response',token); if(ip) tsBody.set('remoteip',ip);
+  const ts=await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify',{method:'POST',body:tsBody}).then(r=>r.json()).catch(()=>({success:false}));
+  if(!ts.success) return new Response('Verification failed. Please try again.',{status:400});
+  const body=[`Name: ${name}`,`Phone: ${phone}`,`Email: ${email}`,`Registration: ${registration||'Not supplied'}`,`Service: ${service||'Not supplied'}`,'',message].join('\n');
+  const resend=await fetch('https://api.resend.com/emails',{method:'POST',headers:{Authorization:`Bearer ${apiKey}`,'Content-Type':'application/json'},body:JSON.stringify({from:'MB Autos website <onboarding@resend.dev>',to:[recipient],reply_to:email,subject:`New MB Autos enquiry — ${service||'General'}`,text:body})});
+  if(!resend.ok) return new Response('Could not send your enquiry.',{status:502});
+  return new Response('Enquiry sent.',{status:200});
+};
