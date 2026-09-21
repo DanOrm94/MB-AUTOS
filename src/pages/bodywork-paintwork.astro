@@ -1,0 +1,6 @@
+---
+import Page from '../layouts/Page.astro'; import CTA from '../components/CTA.astro'; import img from '../assets/garage-exterior-placeholder.svg';
+---
+<Page title="Bodywork & Paintwork Mossley | MB Autos" description="Bodywork, paintwork and panel replacement in Mossley. MB Autos handles accident repairs and cosmetic jobs locally." h1="Dents, panels, paint. Sorted." intro="Bodywork and paintwork for the jobs that stop you wanting to look at your car. Panel replacement, repairs and paintwork handled locally." image={img.src} breadcrumbs={[{name:'Home',path:'/'},{name:'Bodywork & paintwork',path:'/bodywork-paintwork'}]}>
+  <section class="section"><div class="container grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{['Bodywork repair','Paintwork','Panel replacement','Accident damage'].map(x=><div class="card p-6"><h2 class="text-2xl uppercase">{x}</h2><p class="mt-3 text-sm text-zinc-400">Talk to the workshop about the job and we’ll explain the practical options.</p></div>)}</div></section><CTA />
+</Page>
