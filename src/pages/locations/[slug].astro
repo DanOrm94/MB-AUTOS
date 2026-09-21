@@ -1,0 +1,8 @@
+---
+import Page from '../../layouts/Page.astro'; import { locations } from '../../config/site';
+export function getStaticPaths(){return locations.map(l=>({params:{slug:l.name.toLowerCase().replaceAll(' ','-')},props:{location:l}}))}
+const {location}=Astro.props;
+---
+<Page title={`MOT Garage ${location.name} | MB Autos`} description={`MB Autos MOTs, servicing and repairs for drivers in ${location.name}.`} eyebrow={location.name.toUpperCase()} h1={`MOTs & repairs near ${location.name}.`} intro={location.copy+' Book online, call the workshop or send an enquiry.'} image="/favicon.svg" breadcrumbs={[{name:'Home',path:'/'},{name:location.name,path:`/locations/${Astro.params.slug}`}]}>
+  <section class="section"><div class="container max-w-3xl"><h2 class="text-3xl uppercase">Local, not corporate</h2><p class="mt-4 leading-8 text-zinc-300">MB Autos is based on Camden Street in Mossley and works with customers from the surrounding towns for MOTs, repairs, EV work, servicing and bodywork.</p></div></section>
+</Page>
