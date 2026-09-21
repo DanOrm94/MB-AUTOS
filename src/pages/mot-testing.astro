@@ -1,0 +1,10 @@
+---
+import Page from '../layouts/Page.astro'; import CTA from '../components/CTA.astro'; import { business } from '../config/site'; import mot from '../assets/garage-exterior-placeholder.svg';
+const description='Class 4 and Class 7 MOT testing in Mossley, Ashton-under-Lyne. Book online with MB Autos. MOTs from a client-set price.';
+const prices=[['Class 4 MOT',business.motPriceDisplay],['Class 7 MOT',business.motPriceDisplay],['Free diagnostic health check','£30 value — free with every MOT on request']];
+const breadcrumbs=[{name:'Home',path:'/'},{name:'MOT testing',path:'/mot-testing'}];
+---
+<Page title="MOT Testing Mossley | Class 4 & 7 | MB Autos" {description} h1="MOTs without the runaround." intro="Approved Vehicle Test Station for Class 4 & 7 MOTs in Mossley. Book online, call the workshop, and ask for the free £30 diagnostic health check." image={mot.src} breadcrumbs={breadcrumbs}>
+  <section class="section"><div class="container grid gap-8 lg:grid-cols-[1fr_.8fr]"><div><h2 class="text-3xl uppercase">MOT pricing</h2><p class="mt-3 text-zinc-400">Indicative pricing is shown below. Replace the placeholder amount in the site config before launch.</p></div><div class="card overflow-hidden"><table class="w-full text-left"><thead class="bg-zinc-900"><tr><th class="p-4">Test</th><th class="p-4">Price</th></tr></thead><tbody>{prices.map(row=><tr class="border-t border-zinc-800"><td class="p-4">{row[0]}</td><td class="p-4 font-bold">{row[1]}</td></tr>)}</tbody></table></div></div></section>
+  <section class="section border-y border-zinc-800 bg-[#0d0f0f]"><div class="container max-w-3xl"><h2 class="text-3xl uppercase">Failed the MOT?</h2><p class="mt-4 leading-8 text-zinc-300">We can talk through the failure and carry out many repairs in-house, from brakes and tyres to steering, suspension, exhausts, clutches and more. No hard sell — just what the car needs.</p></div></section><CTA />
+</Page>
