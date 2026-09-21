@@ -1,0 +1,6 @@
+---
+import Page from '../layouts/Page.astro'; import CTA from '../components/CTA.astro'; import img from '../assets/garage-exterior-placeholder.svg';
+---
+<Page title="Brakes, Tyres & Clutches Mossley | MB Autos" description="Brakes, tyres, steering, suspension and clutch repairs in Mossley. MB Autos keeps everyday repairs straightforward." h1="Brakes squealing? Clutch slipping? Sorted." intro="Brakes, tyres, steering, suspension and clutches are everyday garage work. We’ll inspect the issue and explain the repair." image={img.src} breadcrumbs={[{name:'Home',path:'/'},{name:'Brakes, tyres & clutches',path:'/brakes-tyres-clutches'}]}>
+  <section class="section"><div class="container grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{['Brakes','Tyres','Clutches','Steering & suspension'].map(x=><div class="card p-6"><h2 class="text-2xl uppercase">{x}</h2><p class="mt-3 text-sm text-zinc-400">From worn components to a job spotted at MOT, we can inspect and repair the problem.</p></div>)}</div></section><CTA />
+</Page>
