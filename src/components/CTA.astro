@@ -5,7 +5,7 @@ import { business } from '../config/site';
   <div class="container card p-7 sm:p-10">
     <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
       <div><p class="text-sm font-bold uppercase tracking-[.2em] text-[var(--accent)]">Ready when you are</p><h2 class="mt-2 text-3xl uppercase sm:text-4xl">Need it sorted?</h2><p class="mt-2 max-w-xl text-zinc-400">Book online or call the workshop. Saturday appointments are available by arrangement.</p></div>
-      <div class="flex flex-wrap gap-3"><a class="btn btn-primary" href={business.bookingUrl} target="_blank" rel="noreferrer">Book online</a><a class="btn btn-secondary" href={`tel:${business.phone.replaceAll(' ','')}`}>Call now</a></div>
+      <div class="flex flex-wrap gap-3"><a class="btn btn-primary" href="/book">Book online</a><a class="btn btn-secondary" href={`tel:${business.phone.replaceAll(' ','')}`}>Call now</a></div>
     </div>
   </div>
 </section>
