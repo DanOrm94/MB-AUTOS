@@ -18,11 +18,35 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
       <section>
         <p class="text-xs font-bold uppercase tracking-[.18em] text-[#8f897d]">1. Vehicle</p>
         <h3 class="mt-1 text-lg font-bold">What are we working on?</h3>
-        <div class="mt-3 flex flex-col gap-2 sm:flex-row">
-          <input class="input min-w-0 flex-1" id="booking-registration" name="registration" autocomplete="off" placeholder="AB12 CDE" aria-label="Vehicle registration" />
-          <button type="button" class="btn btn-secondary shrink-0" data-lookup>Find vehicle</button>
+        <div class="mt-3 grid gap-3 sm:grid-cols-2">
+          <div class="sm:col-span-2">
+            <label class="label" for="booking-registration">Registration</label>
+            <input class="input" id="booking-registration" name="registration" autocomplete="off" placeholder="AB12 CDE" aria-label="Vehicle registration" required />
+          </div>
+          <div>
+            <label class="label" for="booking-make">Make</label>
+            <input class="input" id="booking-make" name="make" autocomplete="off" placeholder="e.g. Ford" required />
+          </div>
+          <div>
+            <label class="label" for="booking-model">Model</label>
+            <input class="input" id="booking-model" name="model" autocomplete="off" placeholder="e.g. Focus" required />
+          </div>
+          <div>
+            <label class="label" for="booking-year">Year</label>
+            <input class="input" id="booking-year" name="year" inputmode="numeric" autocomplete="off" placeholder="e.g. 2021" />
+          </div>
+          <div>
+            <label class="label" for="booking-fuel">Fuel</label>
+            <select class="input" id="booking-fuel" name="fuel">
+              <option value="">Choose fuel</option>
+              <option value="Petrol">Petrol</option>
+              <option value="Diesel">Diesel</option>
+              <option value="Hybrid">Hybrid</option>
+              <option value="Electric">Electric</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
         </div>
-        <p class="mt-2 text-sm text-[#8f897d]" data-vehicle-status aria-live="polite"></p>
       </section>
 
       <section>
@@ -191,27 +215,18 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
     renderCalendar();
   });
 
-  root.querySelector('[data-lookup]').addEventListener('click', async () => {
-    vehicleStatus.textContent = 'Checking DVLA…';
-    try {
-      const response = await fetch(apiBase + '/api/vehicle/lookup', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ registration: reg.value }) });
-      const data = await response.json();
-      vehicleStatus.textContent = response.ok
-        ? [data.make, data.fuel_type, data.year_of_manufacture, data.mot_status].filter(Boolean).join(' · ') || 'Vehicle found.'
-        : data.error || 'Lookup failed.';
-    } catch {
-      vehicleStatus.textContent = 'Vehicle lookup is unavailable. You can still continue and we will check the registration.';
-    }
-  });
-
   service.addEventListener('change', loadSlots);
 
   book.addEventListener('click', async () => {
     const name = root.querySelector('[name=name]').value.trim();
     const phone = root.querySelector('[name=phone]').value.trim();
     const email = root.querySelector('[name=email]').value.trim();
+    const make = root.querySelector('[name=make]').value.trim();
+    const model = root.querySelector('[name=model]').value.trim();
+    const year = root.querySelector('[name=year]').value.trim();
+    const fuel = root.querySelector('[name=fuel]').value;
 
-    if (!reg.value.trim() || !service.value || !selectedDate || !selectedStart || !name || !phone || !email) {
+    if (!reg.value.trim() || !make || !model || !service.value || !selectedDate || !selectedStart || !name || !phone || !email) {
       status.textContent = 'Please complete the vehicle, service, date, time and contact details.';
       return;
     }
@@ -229,6 +244,10 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
           registration: reg.value,
+          make,
+          model,
+          year,
+          fuel,
           service: service.value,
           start: selectedStart,
           name,
