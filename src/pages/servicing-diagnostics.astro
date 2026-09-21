@@ -1,0 +1,6 @@
+---
+import Page from '../layouts/Page.astro'; import CTA from '../components/CTA.astro'; import img from '../assets/garage-workshop-placeholder.svg';
+---
+<Page title="Car Servicing & Diagnostics Mossley | MB Autos" description="Car servicing and diagnostics in Mossley from MB Autos. Find faults, service properly and get clear advice." h1="Service it. Diagnose it. Fix it." intro="Routine servicing, diagnostics and the everyday jobs that keep a car reliable. We’ll tell you what we find and what matters." image={img.src} breadcrumbs={[{name:'Home',path:'/'},{name:'Servicing & diagnostics',path:'/servicing-diagnostics'}]}>
+  <section class="section"><div class="container grid gap-4 md:grid-cols-3">{['Servicing','Diagnostics','Batteries & keys','Air con','Exhausts','Remaps'].map(x=><div class="card p-6"><h2 class="text-2xl uppercase">{x}</h2><p class="mt-3 text-sm text-zinc-400">Ask the workshop about your car and the problem you’re trying to solve.</p></div>)}</div></section><CTA />
+</Page>
