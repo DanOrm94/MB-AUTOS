@@ -79,7 +79,7 @@ async function availability(env:Env,s:Service,date:string){
 
 export default {
   async fetch(request:Request,env:Env){
-    const headers=cors(env.ALLOWED_ORIGIN||request.headers.get('Origin')||undefined);
+    const headers=cors(request.headers.get('Origin')||undefined,env);
     if(request.method==='OPTIONS')return new Response(null,{status:204,headers});
     const url=new URL(request.url);
     try{
@@ -110,8 +110,8 @@ export default {
       if(url.pathname==='/api/bookings'&&request.method==='POST'){
         const b=await request.json().catch(()=>null) as any;
         if(!b||!await turnstile(request,env,b.turnstileToken))return json({error:'Verification failed. Please try again.'},400,headers);
-        const name=String(b.name||'').trim(),phone=String(b.phone||'').trim(),mail=String(b.email||'').trim(),registration=vrn(String(b.registration||'')),slug=String(b.service||''),start=String(b.start||''),notes=String(b.notes||'').trim();
-        if(name.length<2||name.length>100||phone.length<7||phone.length>40||!email(mail)||registration.length<2||!slug||!start)return json({error:'Please complete all required booking fields.'},400,headers);
+        const name=String(b.name||'').trim(),phone=String(b.phone||'').trim(),mail=String(b.email||'').trim(),registration=vrn(String(b.registration||'')),make=String(b.make||'').trim(),model=String(b.model||'').trim(),fuel=String(b.fuel||'').trim(),yearText=String(b.year||'').trim(),year=yearText?Number(yearText):null,slug=String(b.service||''),start=String(b.start||''),notes=String(b.notes||'').trim();
+        if(name.length<2||name.length>100||phone.length<7||phone.length>40||!email(mail)||registration.length<2||make.length<1||make.length>80||model.length<1||model.length>80||(year!==null&&(!Number.isInteger(year)||year<1900||year>2100))||!slug||!start)return json({error:'Please complete all required booking fields.'},400,headers);
         const s=await service(env,slug);if(!s)return json({error:'Service not found.'},404,headers);
         const parsedStart=new Date(start);
         if(Number.isNaN(parsedStart.getTime()))return json({error:'Invalid appointment time.'},400,headers);
@@ -130,7 +130,11 @@ export default {
         const c=customer||await env.DB.prepare('SELECT id FROM customers WHERE email=?').bind(mail).first<{id:number}>();
         if(!c)return json({error:'Could not create customer.'},500,headers);
         const vehicle=await env.DB.prepare('SELECT id FROM vehicles WHERE registration=?').bind(registration).first<{id:number}>();
-        if(!vehicle)await env.DB.prepare('INSERT INTO vehicles(customer_id,registration,created_at,updated_at) VALUES(?,?,?,?)').bind(c.id,registration,now,now).run().catch(()=>{});
+        if(!vehicle){
+          await env.DB.prepare('INSERT INTO vehicles(customer_id,registration,make,model,fuel_type,year_of_manufacture,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?)').bind(c.id,registration,make,model,fuel||null,year,now,now).run().catch(()=>{});
+        }else{
+          await env.DB.prepare('UPDATE vehicles SET customer_id=?,make=?,model=?,fuel_type=?,year_of_manufacture=?,updated_at=? WHERE id=?').bind(c.id,make,model,fuel||null,year,now,vehicle.id).run();
+        }
         const v=vehicle||await env.DB.prepare('SELECT id FROM vehicles WHERE registration=?').bind(registration).first<{id:number}>();
         if(!v)return json({error:'Could not create vehicle.'},500,headers);
         const booking=await env.DB.prepare('INSERT INTO bookings(customer_id,vehicle_id,service_id,starts_at,ends_at,bay_id,technician_id,status,notes,created_at) VALUES(?,?,?,?,?,?,?,?,?,?)').bind(c.id,v.id,s.id,start,end,freeBay?.id||null,freeTech?.id||null,'pending',notes,now).run();
