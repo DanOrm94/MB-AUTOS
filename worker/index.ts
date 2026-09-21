@@ -15,7 +15,16 @@ function json(data:unknown,status=200,extra:Record<string,string>={}) {
   return new Response(JSON.stringify(data), { status, headers:{...JSON_HEADERS,...extra} });
 }
 function cors(origin:string|undefined) {
-  return {'access-control-allow-origin':origin||'https://mbautos.co.uk','access-control-allow-methods':'GET,POST,OPTIONS','access-control-allow-headers':'content-type','vary':'Origin'};
+  const allowed='https://mbautos.co.uk';
+  const value=origin===allowed?allowed:allowed;
+  return {'access-control-allow-origin':value,'access-control-allow-methods':'GET,POST,OPTIONS','access-control-allow-headers':'content-type','vary':'Origin'};
+}
+function todayLocal(){
+  const parts=new Intl.DateTimeFormat('en-GB',{timeZone:TZ,year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  const y=parts.find(p=>p.type==='year')?.value||'';
+  const m=parts.find(p=>p.type==='month')?.value||'';
+  const d=parts.find(p=>p.type==='day')?.value||'';
+  return y+'-'+m+'-'+d;
 }
 function vrn(v:string){return v.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,8)}
 function email(v:string){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)&&v.length<=160}
@@ -92,6 +101,7 @@ export default {
       if(url.pathname==='/api/availability'&&request.method==='GET'){
         const slug=url.searchParams.get('service')||'',date=url.searchParams.get('date')||'';
         if(!dateOnly(date))return json({error:'Invalid date.'},400,headers);
+        if(date<todayLocal())return json({error:'Date is in the past.'},400,headers);
         const s=await service(env,slug);if(!s)return json({error:'Service not found.'},404,headers);
         return json({service:{slug:s.slug,name:s.name,duration_minutes:s.duration_minutes},date,slots:await availability(env,s,date)},200,headers);
       }
@@ -101,6 +111,13 @@ export default {
         const name=String(b.name||'').trim(),phone=String(b.phone||'').trim(),mail=String(b.email||'').trim(),registration=vrn(String(b.registration||'')),slug=String(b.service||''),start=String(b.start||''),notes=String(b.notes||'').trim();
         if(name.length<2||name.length>100||phone.length<7||phone.length>40||!email(mail)||registration.length<2||!slug||!start)return json({error:'Please complete all required booking fields.'},400,headers);
         const s=await service(env,slug);if(!s)return json({error:'Service not found.'},404,headers);
+        const parsedStart=new Date(start);
+        if(Number.isNaN(parsedStart.getTime()))return json({error:'Invalid appointment time.'},400,headers);
+        const localDate=new Intl.DateTimeFormat('en-GB',{timeZone:TZ,year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(parsedStart);
+        const startDate=(localDate.find(p=>p.type==='year')?.value||'')+'-'+(localDate.find(p=>p.type==='month')?.value||'')+'-'+(localDate.find(p=>p.type==='day')?.value||'');
+        if(startDate<todayLocal())return json({error:'Appointment time is in the past.'},400,headers);
+        const slots=await availability(env,s,startDate);
+        if(!slots.some(x=>x.start===start))return json({error:'That appointment time is no longer available. Please choose another time.'},409,headers);
         const end=addMinutes(start,s.duration_minutes);
         const freeBay=await freeResource(env,'bay',start,end),freeTech=await freeResource(env,'technician',start,end);
         if((s.min_bays&&!freeBay)||(s.min_technicians&&!freeTech))return json({error:'That slot has just been taken. Please choose another time.'},409,headers);
