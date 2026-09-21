@@ -1,0 +1,8 @@
+---
+import Page from '../layouts/Page.astro'; import ContactForm from '../components/ContactForm.astro'; import { business } from '../config/site';
+const description='Contact MB Autos in Mossley for MOTs, servicing, repairs, EV work and bodywork. Call, email or send an enquiry.';
+---
+<Page title="Contact MB Autos | Mossley MOT & Repair Garage" {description} h1="Talk to the workshop." intro="Call, email or send the form. For MOTs, online booking is usually the quickest route. Saturday is by appointment." image="/favicon.svg" breadcrumbs={[{name:'Home',path:'/'},{name:'Contact',path:'/contact'}]}>
+  <section class="section"><div class="container grid gap-8 lg:grid-cols-[.75fr_1.25fr]"><div><h2 class="text-3xl uppercase">Contact</h2><div class="mt-5 grid gap-4 text-zinc-300"><p><strong>Phone</strong><br/><a class="underline" href={`tel:${business.phone.replaceAll(' ','')}`}>{business.phone}</a></p><p><strong>Email</strong><br/><a class="underline" href={`mailto:${business.email}`}>{business.email}</a></p><p><strong>Address</strong><br/>{business.street}<br/>{business.locality}<br/>{business.region}<br/>{business.postcode}</p><p><strong>Hours</strong><br/>Mon–Fri 8:30am–5:30pm<br/>Saturday by appointment<br/>Sunday closed</p></div></div><div><ContactForm /></div></div></section>
+  <section class="section border-t border-zinc-800"><div class="container"><h2 class="text-3xl uppercase">Find us</h2><div class="mt-5 overflow-hidden rounded-xl border border-zinc-800"><iframe title="Google Maps location for MB Autos" src="https://www.google.com/maps?q=MB%20Autos%20Mossley%20OL5%209BD&output=embed" width="100%" height="420" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div></div></section>
+</Page>
