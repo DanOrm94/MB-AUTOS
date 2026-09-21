@@ -10,7 +10,6 @@ export const business = {
   country: 'GB',
   phone: '07449 226255',
   email: 'mbautosmotcentre@gmail.com',
-  bookingUrl: 'https://www.sumupbookings.com/m-b-autos',
   priceRange: '££',
   motPriceDisplay: '£XX',
   yearsExperience: '30+ years',
