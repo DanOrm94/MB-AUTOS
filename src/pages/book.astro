@@ -1,0 +1,19 @@
+---
+import Page from '../layouts/Page.astro';
+import BookingWidget from '../components/BookingWidget.astro';
+const description = 'Book your MOT, servicing or repair appointment directly with MB Autos in Mossley.';
+---
+<Page title="Book MB Autos | MOTs & Repairs in Mossley" {description} h1="Book your car in." intro="Choose the job, pick an available date and time, and send your booking request. We’ll confirm it with you." image="/favicon.svg" breadcrumbs={[{name:'Home',path:'/'},{name:'Book',path:'/book'}]}>
+  <section class="section">
+    <div class="container max-w-5xl">
+      <BookingWidget />
+    </div>
+  </section>
+  <section class="section border-t border-zinc-800 bg-[#151818]">
+    <div class="container grid gap-6 md:grid-cols-3">
+      <div><p class="text-sm font-bold uppercase tracking-[.18em] text-[var(--accent)]">Workshop hours</p><p class="mt-2 text-zinc-300">Monday–Friday, 8:30am–5:30pm</p></div>
+      <div><p class="text-sm font-bold uppercase tracking-[.18em] text-[var(--accent)]">Saturday</p><p class="mt-2 text-zinc-300">By appointment — call the workshop.</p></div>
+      <div><p class="text-sm font-bold uppercase tracking-[.18em] text-[var(--accent)]">Need it sorted today?</p><p class="mt-2 text-zinc-300">Call <a class="underline" href="tel:07449226255">07449 226255</a>.</p></div>
+    </div>
+  </section>
+</Page>
