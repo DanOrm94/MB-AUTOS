@@ -16,9 +16,11 @@ a,button,input,select,textarea{outline-offset:3px}
 .grid-lines{background-image:linear-gradient(to right,rgba(232,196,122,.055) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.04) 1px,transparent 1px);background-size:28px 28px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;border-radius:.6rem;padding:.9rem 1.15rem;font-weight:800;transition:transform .15s ease,background .15s ease}
 .btn:hover{transform:translateY(-1px)}
-.btn-primary{background:var(--accent);color:#11100e00e}.btn-primary:hover{background:var(--accent-strong)}
+.btn-primary{background:var(--accent);color:#11100e}.btn-primary:hover{background:var(--accent-strong)}
 .btn-secondary{border:1px solid #655a48;background:#171614;color:var(--text)}.btn-secondary:hover{border-color:var(--accent);background:#201d18}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:1rem}
 .muted{color:var(--muted)}
 .skip-link{position:absolute;left:1rem;top:1rem;z-index:100;background:var(--accent);color:#111;padding:.7rem 1rem;transform:translateY(-200%)}
 .skip-link:focus{transform:none}
+
+.input{color:#11100e;background:#fff}.input::placeholder{color:#8a8479;opacity:1}.input option{color:#11100e;background:#fff}
