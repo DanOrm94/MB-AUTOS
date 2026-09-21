@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@500;600;700&display=swap');
+@import '@fontsource-variable/inter/wght.css';
+@import '@fontsource-variable/oswald/wght.css';
 
 @tailwind base;
 @tailwind components;
