@@ -1,0 +1,6 @@
+---
+import Page from '../../layouts/Page.astro'; import { locations } from '../../config/site';
+---
+<Page title="Areas We Serve | MB Autos Mossley" description="MB Autos serves Mossley, Ashton-under-Lyne, Stalybridge and Oldham for MOTs, servicing and repairs." h1="Local drivers welcome." intro="Based in Mossley, MB Autos looks after customers across the surrounding area for MOTs, repairs, servicing, EV work and bodywork." image="/favicon.svg" breadcrumbs={[{name:'Home',path:'/'},{name:'Areas',path:'/locations'}]}>
+  <section class="section"><div class="container grid gap-4 sm:grid-cols-2">{locations.map(l=><a href={`/locations/${l.name.toLowerCase().replaceAll(' ','-')}`} class="card p-6"><h2 class="text-2xl uppercase">{l.name}</h2><p class="mt-2 text-zinc-400">{l.copy}</p></a>)}</div></section>
+</Page>
