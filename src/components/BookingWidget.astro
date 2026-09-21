@@ -1,7 +1,7 @@
 ---
 const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
 ---
-<div class="card overflow-hidden" data-booking data-turnstile-sitekey={siteKey}>
+<div class="card overflow-hidden" data-booking data-turnstile-sitekey={siteKey} data-api-base={import.meta.env.PUBLIC_API_BASE_URL ?? "https://mb-autos.danielorm.workers.dev"}>
   <div class="border-b border-[#3b352b] bg-[#090908] p-6">
     <div class="flex items-center justify-between gap-4">
       <div>
@@ -89,6 +89,7 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
 (() => {
   const root = document.querySelector('[data-booking]');
   if (!root) return;
+  const apiBase = (root.dataset.apiBase || '').replace(/\/$/, '');
 
   let turnstileToken = '';
   let selectedDate = '';
@@ -116,7 +117,7 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
     selectedStart = '';
     slots.innerHTML = '<p class="col-span-full rounded-lg border border-dashed border-[#3b352b] p-4 text-sm text-[#8f897d]">Checking workshop availability…</p>';
     try {
-      const response = await fetch('/api/availability?service=' + encodeURIComponent(service.value) + '&date=' + selectedDate);
+      const response = await fetch(apiBase + '/api/availability?service=' + encodeURIComponent(service.value) + '&date=' + selectedDate);
       const data = await response.json();
       slots.innerHTML = '';
       if (!response.ok || !data.slots?.length) {
@@ -193,7 +194,7 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
   root.querySelector('[data-lookup]').addEventListener('click', async () => {
     vehicleStatus.textContent = 'Checking DVLA…';
     try {
-      const response = await fetch('/api/vehicle/lookup', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ registration: reg.value }) });
+      const response = await fetch(apiBase + '/api/vehicle/lookup', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ registration: reg.value }) });
       const data = await response.json();
       vehicleStatus.textContent = response.ok
         ? [data.make, data.fuel_type, data.year_of_manufacture, data.mot_status].filter(Boolean).join(' · ') || 'Vehicle found.'
@@ -223,7 +224,7 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
     status.textContent = 'Sending booking request…';
 
     try {
-      const response = await fetch('/api/bookings', {
+      const response = await fetch(apiBase + '/api/bookings', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
