@@ -3,9 +3,14 @@ import Page from '../layouts/Page.astro';
 import BookingWidget from '../components/BookingWidget.astro';
 const description = 'Book your MOT, servicing or repair appointment directly with MB Autos in Mossley.';
 ---
-<Page title="Book MB Autos | MOTs & Repairs in Mossley" {description} h1="Book your car in." intro="Choose the job, pick an available date and time, and send your booking request. We’ll confirm it with you." image="/favicon.svg" breadcrumbs={[{name:'Home',path:'/'},{name:'Book',path:'/book'}]}>
-  <section class="section">
-    <div class="container max-w-5xl">
+<Page title="Book MB Autos | MOTs & Repairs in Mossley" {description} showHero={false} breadcrumbs={[{name:'Home',path:'/'},{name:'Book',path:'/book'}]}>
+  <section class="section pt-10 sm:pt-14">
+    <div class="container max-w-6xl">
+      <div class="mb-8 max-w-3xl">
+        <p class="text-xs font-bold uppercase tracking-[.2em] text-[var(--accent)]">MB AUTOS · ONLINE BOOKING</p>
+        <h1 class="mt-2 text-4xl font-bold uppercase leading-none sm:text-5xl">Book your car in.</h1>
+        <p class="mt-4 text-base leading-7 text-zinc-300 sm:text-lg">Choose the job, pick an available date and time, and send your booking request. We’ll confirm it with you.</p>
+      </div>
       <BookingWidget />
     </div>
   </section>
