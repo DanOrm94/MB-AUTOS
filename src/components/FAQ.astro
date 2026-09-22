@@ -1,12 +1,23 @@
 ---
 import { faqs } from '../data/faq';
 ---
-<div class="grid gap-3">
-  {faqs.map((f,i)=><div class="card overflow-hidden">
+<div class="grid gap-3 faq-list">
+  {faqs.map((f,i)=><div class="card overflow-hidden faq-item">
     <h3><button class="faq-button flex w-full items-center justify-between p-5 text-left text-lg" aria-expanded={i===0?'true':'false'} aria-controls={`faq-${i}`}>{f.q}<span aria-hidden="true">+</span></button></h3>
     <div id={`faq-${i}`} class={i===0?'':'hidden'}><p class="border-t border-zinc-800 p-5 leading-7 text-zinc-300">{f.a}</p></div>
   </div>)}
 </div>
 <script is:inline>
 document.querySelectorAll('.faq-button').forEach(btn=>btn.addEventListener('click',()=>{const panel=document.getElementById(btn.getAttribute('aria-controls'));const open=btn.getAttribute('aria-expanded')==='true';btn.setAttribute('aria-expanded',String(!open));panel?.classList.toggle('hidden',open)}));
+<style>
+.faq-item{transition:transform .25s ease,border-color .25s ease,background-color .25s ease,box-shadow .25s ease}
+.faq-item:hover{transform:translateY(-1px);border-color:#655a48;background:#181714;box-shadow:0 7px 18px rgba(0,0,0,.14)}
+.faq-button{transition:color .25s ease,background-color .25s ease}
+.faq-button:hover{color:var(--accent);background:rgba(232,196,122,.025)}
+.faq-button span{transition:transform .25s ease,color .25s ease}
+.faq-button[aria-expanded="true"] span{transform:rotate(45deg);color:var(--accent)}
+@media (prefers-reduced-motion:reduce){
+  .faq-item,.faq-button,.faq-button span{transition:none}
+}
+</style>
 </script>
