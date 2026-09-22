@@ -35,6 +35,7 @@ export const serviceOptions = [
   'Engine / timing belts',
   'Servicing / diagnostics',
   'Brakes / tyres / clutches',
+  'Electrical / A/C / batteries',
   'Other'
 ] as const;
 
@@ -43,7 +44,8 @@ export const services = [
   { slug: 'ev-servicing', title: 'EV MOT & servicing', short: 'IMI Level 4 qualified EV technician for modern electric cars.' },
   { slug: 'engine-rebuilds-timing-belts', title: 'Engine rebuilds & timing belts', short: 'Engines, timing belts and wet belts handled properly.' },
   { slug: 'servicing-diagnostics', title: 'Servicing & diagnostics', short: 'Routine servicing, fault finding and the jobs that keep cars right.' },
-  { slug: 'brakes-tyres-clutches', title: 'Brakes, tyres & clutches', short: 'Everyday wear-and-tear repairs, from brakes to clutches.' }
+  { slug: 'brakes-tyres-clutches', title: 'Brakes, tyres & clutches', short: 'Everyday wear-and-tear repairs, from brakes to clutches.' },
+  { slug: 'electrical-aircon-batteries', title: 'Electrical, A/C & more', short: 'Electrical faults, batteries, air conditioning, exhausts, key programming and remaps.' }
 ] as const;
 
 export const locations = [
