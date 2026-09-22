@@ -2,7 +2,7 @@ export const SITE = 'https://mbautos.co.uk';
 
 export const business = {
   name: 'MB Autos',
-  tagline: 'MOTs, repairs and bodywork in Mossley',
+  tagline: 'MOTs and repairs in Mossley',
   street: 'Unit 3 (the garage), Camden Street, off Manchester Road',
   locality: 'Mossley',
   region: 'Ashton-under-Lyne',
@@ -32,7 +32,6 @@ export const serviceOptions = [
   'MOT',
   'EV MOT / servicing',
   'Pre-MOT / failure work',
-  'Bodywork / paintwork',
   'Engine / timing belts',
   'Servicing / diagnostics',
   'Brakes / tyres / clutches',
@@ -42,7 +41,6 @@ export const serviceOptions = [
 export const services = [
   { slug: 'mot-testing', title: 'MOT testing', short: 'Class 4 & 7 MOTs with a straight answer on what needs doing.', price: 'From ' + business.motPriceDisplay },
   { slug: 'ev-servicing', title: 'EV MOT & servicing', short: 'IMI Level 4 qualified EV technician for modern electric cars.' },
-  { slug: 'bodywork-paintwork', title: 'Bodywork & paintwork', short: 'Panel repairs, replacements and paintwork without the faff.' },
   { slug: 'engine-rebuilds-timing-belts', title: 'Engine rebuilds & timing belts', short: 'Engines, timing belts and wet belts handled properly.' },
   { slug: 'servicing-diagnostics', title: 'Servicing & diagnostics', short: 'Routine servicing, fault finding and the jobs that keep cars right.' },
   { slug: 'brakes-tyres-clutches', title: 'Brakes, tyres & clutches', short: 'Everyday wear-and-tear repairs, from brakes to clutches.' }
@@ -52,5 +50,5 @@ export const locations = [
   { name: 'Mossley', copy: 'Based in Mossley off Manchester Road, with straightforward access from across the valley.' },
   { name: 'Ashton-under-Lyne', copy: 'A local MOT and repair option for drivers in and around Ashton-under-Lyne.' },
   { name: 'Stalybridge', copy: 'Useful for Stalybridge drivers who want a proper local garage rather than a chain.' },
-  { name: 'Oldham', copy: 'Serving customers from the Oldham area for MOTs, servicing, repairs and bodywork.' }
+  { name: 'Oldham', copy: 'Serving customers from the Oldham area for MOTs, servicing, repairs.' }
 ] as const;
