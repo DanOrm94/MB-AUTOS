@@ -4,10 +4,10 @@ import CTA from '../components/CTA.astro';
 import FAQ from '../components/FAQ.astro';
 import { business, services, locations } from '../config/site';
 import reviews from '../data/reviews.json';
-const description='MB Autos in Mossley: Class 4 & 7 MOTs, EV servicing, repairs, bodywork, diagnostics and more. 30+ years local garage experience.';
+const description='MB Autos in Mossley: Class 4 & 7 MOTs, EV servicing, repairs, diagnostics and more. 30+ years local garage experience.';
 const reviewSchema = !reviews.some(r=>r.placeholder) && reviews.length ? {'@context':'https://schema.org','@type':'AggregateRating','ratingValue':business.ratingValue,'reviewCount':business.reviewCount} : null;
 ---
-<Page title="MB Autos | MOTs, repairs & servicing in Mossley" {description} h1="Proper garage work. No faff." intro="MOTs, repairs, EV servicing and bodywork from a local workshop in Mossley with 30+ years’ experience. Honest advice, sensible repairs and getting your car sorted today." image="/lambo.png">
+<Page title="MB Autos | MOTs, repairs & servicing in Mossley" {description} h1="Proper garage work. No faff." intro="MOTs, repairs and EV servicing from a local workshop in Mossley with 30+ years’ experience. Honest advice, sensible repairs and getting your car sorted today." image="/lambo.png">
   {reviewSchema && <script type="application/ld+json" set:html={JSON.stringify(reviewSchema)} />}
   <section class="border-b border-zinc-800 bg-[#151818]">
     <div class="container grid gap-8 py-12 lg:grid-cols-3">
