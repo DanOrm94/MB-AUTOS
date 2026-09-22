@@ -1,7 +1,7 @@
 ---
 import Base from './Base.astro';
 import { SITE, business, services } from '../config/site';
-const { title, description, eyebrow = 'MB AUTOS', h1, intro, image, schemaType = 'AutoRepair', breadcrumbs = [] } = Astro.props;
+const { title, description, eyebrow = 'MB AUTOS', h1, intro, image, schemaType = 'AutoRepair', breadcrumbs = [], showHero = true } = Astro.props;
 const autoRepairSchema = {
   '@context':'https://schema.org','@type':schemaType,'name':business.name,'url':SITE,
   'address':{'@type':'PostalAddress','streetAddress':business.street,'addressLocality':business.locality,'addressRegion':business.region,'postalCode':business.postcode,'addressCountry':business.country},
@@ -36,7 +36,7 @@ const breadcrumbSchema = breadcrumbs.length ? {'@context':'https://schema.org','
     </div>
   </header>
   <main id="main">
-    <section class="section grid-lines border-b border-zinc-800">
+    {showHero && <section class="section grid-lines border-b border-zinc-800">
       <div class="container grid gap-8 lg:grid-cols-[1.2fr_.8fr] lg:items-end">
         <div>
           <p class="mb-3 text-sm font-bold uppercase tracking-[.2em] text-[var(--accent)]">{eyebrow}</p>
@@ -52,7 +52,7 @@ const breadcrumbSchema = breadcrumbs.length ? {'@context':'https://schema.org','
           <img src={image} alt="" width="1600" height="1000" class="h-full w-full object-cover" loading="eager" decoding="async" />
         </div>
       </div>
-    </section>
+    </section>}
     <slot />
   </main>
   <footer class="border-t border-[#3b352b] bg-[#080807]">
