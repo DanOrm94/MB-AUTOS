@@ -67,5 +67,23 @@ const breadcrumbSchema = breadcrumbs.length ? {'@context':'https://schema.org','
   <script is:inline>
     const b=document.getElementById('menu-button'),m=document.getElementById('mobile-menu');
     b?.addEventListener('click',()=>{const open=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!open));m?.classList.toggle('hidden',open)});
+
+    const headings=document.querySelectorAll('main section h2');
+    if(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches){
+      headings.forEach(h=>h.classList.add('reveal-heading'));
+    }else{
+      const observer=new IntersectionObserver(entries=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },{threshold:.15,rootMargin:'0px 0px -8% 0px'});
+      headings.forEach(h=>{
+        h.classList.add('reveal-heading','reveal-ready');
+        observer.observe(h);
+      });
+    }
   </script>
 </Base>
