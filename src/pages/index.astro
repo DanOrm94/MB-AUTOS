@@ -18,9 +18,95 @@ const reviewSchema = !reviews.some(r=>r.placeholder) && reviews.length ? {'@cont
       <div class="flex flex-col justify-end gap-3 lg:items-end"><a class="btn btn-primary" href="/book">Book online</a><p class="text-sm font-semibold text-zinc-400">Saturday by appointment</p></div>
     </div>
   </section>
-  <section class="section"><div class="container"><div class="mb-8 max-w-2xl"><p class="text-sm font-bold uppercase tracking-[.2em] text-[var(--accent)]">What we do</p><h2 class="mt-2 text-4xl uppercase">One workshop. Plenty sorted.</h2></div><div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">{services.map(s=><a class="card service-link group p-6 hover:border-zinc-500" href={`/${s.slug}`}><h3 class="mt-2 text-2xl uppercase">{s.title}</h3><p class="mt-3 text-zinc-400">{s.short}</p><p class="mt-5 font-bold group-hover:underline">{s.price ?? 'See service'} →</p></a>)}</div></div></section>
-  <section class="section border-y border-zinc-800 bg-[#0d0f0f]"><div class="container grid gap-10 lg:grid-cols-2 lg:items-center"><div><p class="text-sm font-bold uppercase tracking-[.2em] text-[var(--accent)]">Why MB Autos</p><h2 class="mt-2 text-4xl uppercase">30+ years of fixing cars without making a drama of it.</h2><div class="mt-6 grid gap-4 sm:grid-cols-2"><div class="card p-5"><strong>5.0 stars</strong><p class="mt-1 text-sm text-zinc-400">13 Google reviews</p></div><div class="card p-5"><strong>EV qualified</strong><p class="mt-1 text-sm text-zinc-400">IMI Level 4 EV technician</p></div><div class="card p-5"><strong>Approved test station</strong><p class="mt-1 text-sm text-zinc-400">Class 4 & 7 MOTs</p></div><div class="card p-5"><strong>Free check</strong><p class="mt-1 text-sm text-zinc-400">£30 diagnostic health check with MOT on request</p></div></div></div><div class="card overflow-hidden"><img src="/diagnostics.png" alt="Vehicle diagnostics at MB Autos" width="1600" height="1000" loading="lazy" class="w-full object-cover" /></div></div></section>
-  <section class="section"><div class="container grid gap-6 md:grid-cols-2 lg:grid-cols-4">{locations.map(l=><div class="card p-5"><h3 class="text-2xl uppercase">{l.name}</h3><p class="mt-2 text-sm leading-6 text-zinc-400">{l.copy}</p></div>)}</div></section>
+
+  <section class="section">
+    <div class="container">
+      <div class="mb-8 max-w-2xl">
+        <p class="text-sm font-bold uppercase tracking-[.2em] text-[var(--accent)]">What we do</p>
+        <h2 class="mt-2 text-4xl uppercase">One workshop. Plenty sorted.</h2>
+      </div>
+      <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {services.map(s=><a class="card service-link group p-6 hover:border-zinc-500" href={`/${s.slug}`}>
+          <h3 class="mt-2 text-2xl uppercase">{s.title}</h3>
+          <p class="mt-3 text-zinc-400">{s.short}</p>
+          <p class="mt-5 font-bold group-hover:underline">{s.price ?? 'See service'} →</p>
+        </a>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section border-y border-zinc-800 bg-[#0d0f0f]">
+    <div class="container grid gap-10 lg:grid-cols-2 lg:items-center">
+      <div>
+        <p class="text-sm font-bold uppercase tracking-[.2em] text-[var(--accent)]">Why MB Autos</p>
+        <h2 class="mt-2 text-4xl uppercase">30+ years of fixing cars without making a drama of it.</h2>
+        <div class="mt-6 grid gap-4 sm:grid-cols-2">
+          <div class="card p-5"><strong>5.0 stars</strong><p class="mt-1 text-sm text-zinc-400">13 Google reviews</p></div>
+          <div class="card p-5"><strong>EV qualified</strong><p class="mt-1 text-sm text-zinc-400">IMI Level 4 EV technician</p></div>
+          <div class="card p-5"><strong>Approved test station</strong><p class="mt-1 text-sm text-zinc-400">Class 4 & 7 MOTs</p></div>
+          <div class="card p-5"><strong>Free check</strong><p class="mt-1 text-sm text-zinc-400">£30 diagnostic health check with MOT on request</p></div>
+        </div>
+      </div>
+      <div class="card overflow-hidden"><img src="/diagnostics.png" alt="Vehicle diagnostics at MB Autos" width="1600" height="1000" loading="lazy" class="w-full object-cover" /></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="mb-8 max-w-2xl">
+        <p class="text-sm font-bold uppercase tracking-[.2em] text-[var(--accent)]">More than MOTs</p>
+        <h2 class="mt-2 text-4xl uppercase">Electrical, A/C, batteries & more.</h2>
+        <p class="mt-4 leading-7 text-zinc-300">Electrical faults, batteries, air conditioning, exhausts, key programming and remaps — alongside the servicing and repair work we already do.</p>
+      </div>
+      <a class="card service-link group block p-6 md:flex md:items-center md:justify-between md:gap-8" href="/electrical-aircon-batteries">
+        <div>
+          <h3 class="text-2xl uppercase">Electrical, A/C & more</h3>
+          <p class="mt-2 max-w-2xl text-zinc-400">Fault finding, battery replacement, air-con work, exhausts, key programming and remaps.</p>
+        </div>
+        <p class="mt-5 shrink-0 font-bold md:mt-0 group-hover:underline">See service →</p>
+      </a>
+    </div>
+  </section>
+
+  <section class="section border-y border-zinc-800 bg-[#151818]">
+    <div class="container">
+      <div class="mb-8 max-w-2xl">
+        <p class="text-sm font-bold uppercase tracking-[.2em] text-[var(--accent)]">Inside the work</p>
+        <h2 class="mt-2 text-4xl uppercase">A few examples of what we work on.</h2>
+        <p class="mt-3 leading-7 text-zinc-400">From diagnostics and braking work to everyday vehicle repairs.</p>
+      </div>
+      <div class="grid gap-4 md:grid-cols-3">
+        <div class="card overflow-hidden"><img src="/diagnostics.png" alt="Vehicle diagnostics" width="1600" height="1000" loading="lazy" class="aspect-[4/3] w-full object-cover" /><div class="p-4"><h3 class="text-xl uppercase">Diagnostics</h3><p class="mt-1 text-sm text-zinc-400">Fault finding and vehicle health checks.</p></div></div>
+        <div class="card overflow-hidden"><img src="/brakes.png" alt="Brake work" width="1600" height="1000" loading="lazy" class="aspect-[4/3] w-full object-cover" /><div class="p-4"><h3 class="text-xl uppercase">Brakes & repairs</h3><p class="mt-1 text-sm text-zinc-400">Everyday maintenance and repair work.</p></div></div>
+        <div class="card overflow-hidden"><img src="/lambo.png" alt="Vehicle at MB Autos" width="1600" height="1000" loading="lazy" class="aspect-[4/3] w-full object-cover" /><div class="p-4"><h3 class="text-xl uppercase">All sorts of cars</h3><p class="mt-1 text-sm text-zinc-400">From routine servicing to bigger jobs.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="mb-8 max-w-2xl">
+        <p class="text-sm font-bold uppercase tracking-[.2em] text-[var(--accent)]">How it works</p>
+        <h2 class="mt-2 text-4xl uppercase">Simple from start to finish.</h2>
+      </div>
+      <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+        {[
+          ['01','Book','Tell us what your car needs.'],
+          ['02','We inspect it','We diagnose the issue and explain what needs doing.'],
+          ['03','Agree the work','We talk through the repair before carrying out additional work.'],
+          ['04','We sort it','Our workshop gets the job done properly.'],
+          ['05','Collect','We let you know when the car is ready.']
+        ].map(([number,title,copy])=><div class="card p-5"><p class="text-sm font-bold tracking-[.2em] text-[var(--accent)]">{number}</p><h3 class="mt-3 text-xl uppercase">{title}</h3><p class="mt-2 text-sm leading-6 text-zinc-400">{copy}</p></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      {locations.map(l=><div class="card p-5"><h3 class="text-2xl uppercase">{l.name}</h3><p class="mt-2 text-sm leading-6 text-zinc-400">{l.copy}</p></div>)}
+    </div>
+  </section>
+
   <section class="section bg-[#151818]"><div class="container grid gap-8 lg:grid-cols-2"><div><p class="text-sm font-bold uppercase tracking-[.2em] text-[var(--accent)]">Questions</p><h2 class="mt-2 text-4xl uppercase">Straight answers.</h2></div><FAQ /></div></section>
   <CTA />
 </Page>
