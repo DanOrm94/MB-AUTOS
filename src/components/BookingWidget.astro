@@ -53,13 +53,7 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
         <p class="text-xs font-bold uppercase tracking-[.18em] text-[#8f897d]">2. Job</p>
         <h3 class="mt-1 text-lg font-bold">What does it need?</h3>
         <select class="input mt-3" id="booking-service" name="service">
-          <option value="">Choose a service</option>
-          <option value="mot-testing">MOT</option>
-          <option value="ev-servicing">EV MOT / servicing</option>
-          <option value="bodywork-paintwork">Bodywork / paintwork</option>
-          <option value="engine-rebuilds-timing-belts">Engine / timing belts</option>
-          <option value="servicing-diagnostics">Servicing / diagnostics</option>
-          <option value="brakes-tyres-clutches">Brakes / tyres / clutches</option>
+          <option value="">Loading services…</option>
         </select>
       </section>
 
@@ -215,6 +209,23 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
     renderCalendar();
   });
 
+  const loadServices = async () => {
+    try {
+      const response = await fetch(apiBase + '/api/services');
+      const data = await response.json();
+      if (!response.ok || !Array.isArray(data)) throw new Error('services');
+      service.innerHTML = '<option value="">Choose a service</option>';
+      data.forEach((item) => {
+        const option = document.createElement('option');
+        option.value = item.slug;
+        option.textContent = item.name;
+        service.appendChild(option);
+      });
+    } catch {
+      service.innerHTML = '<option value="">Services unavailable — please call</option>';
+    }
+  };
+
   service.addEventListener('change', loadSlots);
 
   book.addEventListener('click', async () => {
@@ -272,5 +283,6 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
   });
 
   renderCalendar();
+  loadServices();
 })();
 </script>
