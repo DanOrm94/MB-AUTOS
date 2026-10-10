@@ -104,6 +104,8 @@ export default {
         const r=await fetch('https://driver-vehicle-licensing.api.gov.uk/vehicle-enquiry/v1/vehicles',{method:'POST',headers:{'content-type':'application/json','x-api-key':env.DVLA_API_KEY},body:JSON.stringify({registrationNumber:registration})});
         if(r.status===404)return json({error:'Vehicle not found. Check the registration and try again.'},404,headers);
         if(!r.ok)return json({error:'Vehicle lookup is temporarily unavailable.'},502,headers);
+        // The DVLA Vehicle Enquiry Service does not return a model, so `model`
+        // is intentionally stored and returned as null; the customer supplies it.
         const v=await r.json() as any, now=Date.now(), expires=now+7*86400000;
         await env.DB.prepare('INSERT INTO vehicle_lookup_cache (registration,make,model,fuel_type,engine_cc,year_of_manufacture,mot_status,mot_expiry,colour,raw_json,expires_at) VALUES (?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(registration) DO UPDATE SET make=excluded.make,model=excluded.model,fuel_type=excluded.fuel_type,engine_cc=excluded.engine_cc,year_of_manufacture=excluded.year_of_manufacture,mot_status=excluded.mot_status,mot_expiry=excluded.mot_expiry,colour=excluded.colour,raw_json=excluded.raw_json,expires_at=excluded.expires_at').bind(registration,v.make||null,null,v.fuelType||null,v.engineCapacity||null,v.yearOfManufacture||null,v.motStatus||null,v.motExpiryDate||null,v.colour||null,JSON.stringify(v),expires).run();
         return json({registration,make:v.make||null,model:null,fuel_type:v.fuelType||null,engine_cc:v.engineCapacity||null,year_of_manufacture:v.yearOfManufacture||null,mot_status:v.motStatus||null,mot_expiry:v.motExpiryDate||null,colour:v.colour||null,cached:false},200,headers);

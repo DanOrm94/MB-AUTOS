@@ -1,9 +1,11 @@
 import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   output: 'static',
-  integrations: [tailwind()],
   site: 'https://mbautos.co.uk',
-  build: { format: 'directory' }
+  build: { format: 'directory' },
+  vite: {
+    plugins: [tailwindcss()]
+  }
 });

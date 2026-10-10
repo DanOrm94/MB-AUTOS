@@ -9,6 +9,7 @@ import { faqs } from '../data/faq';
 </div>
 <script is:inline>
 document.querySelectorAll('.faq-button').forEach(btn=>btn.addEventListener('click',()=>{const panel=document.getElementById(btn.getAttribute('aria-controls'));const open=btn.getAttribute('aria-expanded')==='true';btn.setAttribute('aria-expanded',String(!open));panel?.classList.toggle('hidden',open)}));
+</script>
 <style>
 .faq-item{transition:transform .25s ease,border-color .25s ease,background-color .25s ease,box-shadow .25s ease}
 .faq-item:hover{transform:translateY(-1px);border-color:#655a48;background:#181714;box-shadow:0 7px 18px rgba(0,0,0,.14)}
@@ -20,4 +21,3 @@ document.querySelectorAll('.faq-button').forEach(btn=>btn.addEventListener('clic
   .faq-item,.faq-button,.faq-button span{transition:none}
 }
 </style>
-</script>
