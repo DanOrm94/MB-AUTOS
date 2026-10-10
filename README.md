@@ -4,7 +4,7 @@ Astro + Tailwind static marketing site for MB Autos, Mossley.
 
 ## Local development
 
-Requires Node.js 20+.
+Requires Node.js 22.12+ (Astro 5+ requirement).
 
 ```bash
 npm install
@@ -21,7 +21,7 @@ Recommended Pages settings:
 - Production branch: `main`
 - Build command: `npm run build`
 - Build output directory: `dist`
-- Node.js version: 20+
+- Node.js version: 22.12+
 
 Because this is a static Astro build, ordinary pushes to `main` can deploy automatically and pull requests can use Pages preview deployments.
 

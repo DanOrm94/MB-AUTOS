@@ -1,9 +1,13 @@
 @import '@fontsource-variable/inter/wght.css';
 @import '@fontsource-variable/oswald/wght.css';
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Oswald', Impact, sans-serif;
+  --shadow-industrial: 0 20px 60px rgba(0, 0, 0, .35);
+}
 
 :root{--bg:#0b0b0a;--panel:#151513;--text:#f6f3eb;--muted:#b8b3a8;--accent:#e8c47a;--accent-strong:#f0d08b;--cream:#f7f3e9;--line:#3b352b}
 html{scroll-behavior:smooth}
