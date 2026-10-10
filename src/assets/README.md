@@ -8,6 +8,5 @@ Suggested images:
 - team-placeholder.svg
 - mot-bay-placeholder.svg
 - ev-service-placeholder.svg
-- bodywork-placeholder.svg
 
 Do not use hotlinked stock images. The site uses Astro's image pipeline for responsive output.
